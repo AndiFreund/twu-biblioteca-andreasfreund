@@ -6,7 +6,11 @@ import java.util.Scanner;
 
 public class BibliotecaApp {
 
-    static ArrayList<String> books = new ArrayList<String>(Arrays.asList("book1", "book2", "book3"));
+    //static ArrayList<String> books = new ArrayList<String>(Arrays.asList("book1", "book2", "book3"));
+    static ArrayList<Book> books = new ArrayList<Book>(Arrays.asList(
+            new Book("book1", "author1", "2001"),
+            new Book("book2", "author2", "2002"),
+            new Book("book3", "author3", "2003")));
 
     public static void main(String[] args) {
         System.out.println(welcomeMessag());
@@ -22,8 +26,8 @@ public class BibliotecaApp {
 
     public static String getListOfBooks() {
         String result = new String();
-        for (String book : books) {
-            result += book + "\n";
+        for (Book book : books) {
+            result += book.getTitle() + "\t\t" + book.getAuthor() + "\t\t" + book.getYear() + "\n";
         }
         return result;
     }

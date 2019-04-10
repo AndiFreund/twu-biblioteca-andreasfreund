@@ -24,6 +24,8 @@ public class E2ETests {
     private final PrintStream originalOut = System.out;
     //private final PrintStream originalErr = System.err;
 
+    ArrayList<String> fakeList = new ArrayList<String>(Arrays.asList("book1", "book2", "book3"));
+
     @Before
     public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
@@ -55,10 +57,24 @@ public class E2ETests {
         assertThat("Welcome to Biblioteca! Your one-stop-shop for great book titles in Bangalore!", is(equalTo(message)));
     }
 
+    @Ignore
     @Test
     public void listOfBooks() {
         //given
         String fakeList = "book1\nbook2\nbook3\n";
+        //when
+        String message = BibliotecaApp.getListOfBooks();
+        //then
+        assertThat(fakeList, is(equalTo(message)));
+    }
+
+    @Test
+    public void listOfBooksWithAdditionalData() {
+        //given
+        String fakeList = new String();
+        for(int i = 1; i <= 3; i++) {
+            fakeList += "book" + i + "\t\tauthor" + i + "\t\t200" + i + "\n";
+        }
         //when
         String message = BibliotecaApp.getListOfBooks();
         //then
