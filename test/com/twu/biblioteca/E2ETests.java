@@ -52,7 +52,7 @@ public class E2ETests {
     public void welcomeMessage() {
         //given
         //when
-        String message = BibliotecaApp.welcomeMessag();
+        String message = BibliotecaApp.welcomeMessage();
         //then
         assertThat("Welcome to Biblioteca! Your one-stop-shop for great book titles in Bangalore!", is(equalTo(message)));
     }
@@ -79,5 +79,15 @@ public class E2ETests {
         String message = BibliotecaApp.getListOfBooks();
         //then
         assertThat(fakeList, is(equalTo(message)));
+    }
+
+    @Test
+    public void listOfOptions() {
+        //given
+        String fakeListOfOptions = "0: exit\n1: list of books";
+        //when
+        String message = BibliotecaApp.getListOfOptions();
+        //then
+        assertThat(fakeListOfOptions, is(equalTo(message)));
     }
 }
