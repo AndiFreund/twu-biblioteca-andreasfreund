@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 
 public class SessionTests {
@@ -14,8 +15,20 @@ public class SessionTests {
 
     @Before
     public void setUp() {
-        session.setUpOptions();
-        session.setUpBooks();
+        session.setUp();
+    }
+
+    @Test
+    public void testSetUp() {
+        //given
+        Session testSession = new Session();
+        assertThat("", is(equalTo(testSession.displayOptions())));
+        assertThat("", is(equalTo(testSession.displayBooks())));
+        //when
+        testSession.setUp();
+        //then
+        assertThat("", is(not(equalTo(testSession.displayOptions()))));
+        assertThat("", is(not(equalTo(testSession.displayBooks()))));
     }
 
     @Test

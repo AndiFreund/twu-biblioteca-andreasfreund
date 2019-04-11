@@ -1,7 +1,6 @@
 package com.twu.biblioteca;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class BibliotecaApp {
@@ -11,13 +10,13 @@ public class BibliotecaApp {
         session.setUp();
 
         System.out.println(session.displayWelcomeMessage());
-        //System.out.println(getListOfBooks());
         System.out.println(session.displayOptions());
 
         Scanner scanner = new Scanner(System.in);
         while(true) {
             String input = scanner.next();
-            switch (input) {
+            session.executeLibraryApplication(input);
+            /*switch (input) {
                 case "0":
                     return;
                 case "1":
@@ -27,7 +26,7 @@ public class BibliotecaApp {
                     System.out.println("Please select a valid options!");
                     System.out.println(session.displayOptions());
                     break;
-            }
+            }*/
         }
     }
 
