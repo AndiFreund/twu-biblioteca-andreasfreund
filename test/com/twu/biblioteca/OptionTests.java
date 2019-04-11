@@ -13,7 +13,7 @@ public class OptionTests {
     public void makeNewOption() {
         //given
         //when
-        Option option = new Option(0, "exit");
+        Option option = new Option("quit", "quit");
         //then
         assertThat(option, is(notNullValue()));
     }
@@ -21,10 +21,10 @@ public class OptionTests {
     @Test
     public void displayOption() {
         //given
-        Option option = new Option(0, "exit");
+        Option option = new Option("quit", "quit");
         //when
         String result = option.toString();
         //then
-        assertThat(result, is("0: exit"));
+        assertThat(result, is("quit: quit"));
     }
 }

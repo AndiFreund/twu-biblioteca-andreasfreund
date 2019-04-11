@@ -1,58 +1,76 @@
 package com.twu.biblioteca;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 
 public class SessionTests {
 
-    Session session = new Session();
+    Session session;
+
+    //https://stackoverflow.com/a/1119559
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
+
+    @Before
+    public void setUpStreams() {
+        System.setOut(new PrintStream(outContent));
+    }
 
     @Before
     public void setUp() {
+        session = new Session();
         session.setUp();
     }
 
-    @Test
-    public void testSetUp() {
-        //given
-        Session testSession = new Session();
-        assertThat("", is(equalTo(testSession.displayOptions())));
-        assertThat("", is(equalTo(testSession.displayBooks())));
-        //when
-        testSession.setUp();
-        //then
-        assertThat("", is(not(equalTo(testSession.displayOptions()))));
-        assertThat("", is(not(equalTo(testSession.displayBooks()))));
+    @After
+    public void restoreStreams() {
+        System.setOut(originalOut);
     }
 
     @Test
-    public void welcomeMessage() {
+    public void testSetUpTest() {
+        //given
+        Session testSession = new Session();
+        assertThat(testSession.displayOptions(), is(""));
+        assertThat(testSession.displayBooks(), is(""));
+        //when
+        testSession.setUp();
+        //then
+        assertThat(testSession.displayOptions(), is(not("")));
+        assertThat(testSession.displayBooks(), is(not("")));
+    }
+
+    @Test
+    public void welcomeMessageTest() {
         //given
         //when
         String message = session.displayWelcomeMessage();
         //then
-        assertThat("Welcome to Biblioteca! Your one-stop-shop for great book titles in Bangalore!", is(equalTo(message)));
+        assertThat(message, is("Welcome to Biblioteca! Your one-stop-shop for great book titles in Bangalore!"));
     }
 
     @Ignore
     @Test
-    public void listOfBooks() {
+    public void listOfBooksTest() {
         //given
         String fakeList = "book1\nbook2\nbook3\n";
         //when
         String message = session.displayBooks();
         //then
-        assertThat(fakeList, is(equalTo(message)));
+        assertThat(message, is(fakeList));
     }
 
     @Test
-    public void listOfBooksWithAdditionalData() {
+    public void listOfBooksWithAdditionalDataTest() {
         //given
         String fakeList = new String();
         for(int i = 1; i <= 3; i++) {
@@ -61,16 +79,76 @@ public class SessionTests {
         //when
         String message = session.displayBooks();
         //then
-        assertThat(fakeList, is(equalTo(message)));
+        assertThat(message, is(fakeList));
     }
 
     @Test
-    public void listOfOptions() {
+    public void listOfOptionsTest() {
         //given
-        String fakeListOfOptions = "0: exit\n1: list of books\n";
+        String fakeListOfOptions = "quit\nlist\ncheckout\n";
         //when
         String message = session.displayOptions();
         //then
-        assertThat(fakeListOfOptions, is(equalTo(message)));
+        assertThat(message, is(fakeListOfOptions));
+    }
+
+    @Test
+    public void invalidOptionInputTest() {
+        //given
+        String fakeMessage = "Please select a valid options!\nquit\nlist\ncheckout\n\n";
+        //when
+        session.executeLibraryApplication("-1");
+        //then
+        assertThat(outContent.toString(), is(fakeMessage));
+    }
+
+    @Test
+    public void invalidFormatInputTest() {
+        //given
+        String fakeMessage = "Please select a valid options!\nquit\nlist\ncheckout\n\n";
+        //when
+        session.executeLibraryApplication("abc");
+        //then
+        assertThat(outContent.toString(), is(fakeMessage));
+    }
+
+    @Test
+    public void exitExecutionTest() {
+        //TODO
+    }
+
+    @Test
+    public void listExecutionTest() {
+        //given
+        String fakeList = new String();
+        for(int i = 1; i <= 3; i++) {
+            fakeList += "book" + i + "\t\tauthor" + i + "\t\t200" + i + "\n";
+        }
+        fakeList += "\n";
+        //when
+        session.executeLibraryApplication("list");
+        //then
+        assertThat(outContent.toString(), is(fakeList));
+    }
+
+    @Ignore
+    @Test
+    public void argumentTest() {
+        session.executeLibraryApplication("checkout test");
+        assertThat(outContent.toString(), is("test\n"));
+    }
+
+    @Test
+    public void checkoutExecutionTest() {
+        //given
+        setUp();
+        String result = new String();
+        for(int i = 2; i <= 3; i++) {
+            result += "book" + i + "\t\tauthor" + i + "\t\t200" + i + "\n";
+        }
+        //when
+        session.executeLibraryApplication("checkout book1");
+        //then
+        assertThat(session.displayBooks(), is(result));
     }
 }

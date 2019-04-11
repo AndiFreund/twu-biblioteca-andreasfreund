@@ -2,19 +2,19 @@ package com.twu.biblioteca;
 
 public class Option {
 
-    private int num;
+    private String command;
     private String description;
     private LibraryApplication application;
 
-    Option(int num, String description) {
-        this.num = num;
+    Option(String command, String description) {
+        this.command = command;
         this.description = description;
-        this.application = ApplicationFactory.getApplication(num);
+        this.application = ApplicationFactory.getApplication(command);
     }
 
     @Override
     public String toString() {
-        return num + ": " + description;
+        return command + ": " + description;
     }
 
     void execute(Session session) {

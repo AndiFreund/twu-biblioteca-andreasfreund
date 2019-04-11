@@ -2,11 +2,13 @@ package com.twu.biblioteca;
 
 public class ApplicationFactory {
 
-    public static LibraryApplication getApplication(int num) {
-        switch (num) {
-            case 0:
+    public static LibraryApplication getApplication(String command) {
+        switch (command) {
+            case "quit":
                 return new ExitApplication();
-            case 1:
+            case "list":
+                return new ListBooksApplication();
+            case "checkout":
                 return new CheckOutBooks();
         }
         return null;

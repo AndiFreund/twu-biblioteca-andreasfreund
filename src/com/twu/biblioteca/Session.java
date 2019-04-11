@@ -1,18 +1,23 @@
 package com.twu.biblioteca;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Session {
 
-    private ArrayList<Option> options = new ArrayList<>();
+    private Map<String, Option> options = new HashMap<>();
     private ArrayList<Book> books = new ArrayList<>();
+    private String command;
+    private String argument;
 
     public Session() {
     }
 
     private void setUpOptions() {
-        options.add(new Option(0, "exit"));
-        options.add(new Option(1, "list of books"));
+        options.put("quit", new Option("quit", "quit"));
+        options.put("list", new Option("list", "list of books"));
+        options.put("checkout", new Option("checkout", "check out a book, \"checkout title\""));
     }
 
     private void setUpBooks() {
@@ -26,7 +31,7 @@ public class Session {
     }
     
     public String displayOptions() {
-        return BibliotecaApp.showListAsString(options);
+        return BibliotecaApp.showListAsString(new ArrayList<>(options.keySet()));
     }
 
     public String displayBooks() {
@@ -38,24 +43,39 @@ public class Session {
         setUpBooks();
     }
 
-    public void executeLibraryApplication(String optionString) {
-        int option;
+    public void executeLibraryApplication(String input) {
+        splitInput(input);
         try {
-            option = Integer.parseInt(optionString);
-        } catch (NumberFormatException e) {
+            options.get(command).execute(this);
+        } catch (NullPointerException e) {
             displayRetry();
-            return;
         }
+    }
 
-        if (option > -1 && option < options.size()) {
-             options.get(option).execute(this);
-        } else {
-            displayRetry();
-        }
+    private void splitInput(String input) {
+        command = extractCommand(input);
+        argument = extractArgument(input);
+    }
+
+    private String extractCommand(String input) {
+        return input.split(" ")[0];
+    }
+
+    private String extractArgument(String input) {
+        String[] temp = input.split(" ", 2);
+        return temp.length > 1 ? temp[1] : "";
     }
 
     private void displayRetry() {
         System.out.println("Please select a valid options!");
         System.out.println(displayOptions());
+    }
+
+    public String getArgument() {
+        return argument;
+    }
+
+    public ArrayList<Book> getBooks() {
+        return books;
     }
 }

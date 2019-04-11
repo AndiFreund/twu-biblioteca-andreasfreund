@@ -16,17 +16,6 @@ public class BibliotecaApp {
         while(true) {
             String input = scanner.next();
             session.executeLibraryApplication(input);
-            /*switch (input) {
-                case "0":
-                    return;
-                case "1":
-                    System.out.println(session.displayBooks());
-                    break;
-                default:
-                    System.out.println("Please select a valid options!");
-                    System.out.println(session.displayOptions());
-                    break;
-            }*/
         }
     }
 
