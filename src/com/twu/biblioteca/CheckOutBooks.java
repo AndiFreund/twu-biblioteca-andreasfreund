@@ -16,5 +16,6 @@ public class CheckOutBooks implements LibraryApplication {
         }
 
         books.remove(result);
+        System.out.println("Thank you! Enjoy the book");
     }
 }

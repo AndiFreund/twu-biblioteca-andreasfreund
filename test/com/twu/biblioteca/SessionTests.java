@@ -151,4 +151,15 @@ public class SessionTests {
         //then
         assertThat(session.displayBooks(), is(result));
     }
+
+    @Test
+    public void checkoutSuccessfulTest() {
+        //given
+        setUp();
+        String result = "Thank you! Enjoy the book\n";
+        //when
+        session.executeLibraryApplication("checkout book1");
+        //then
+        assertThat(outContent.toString(), is(result));
+    }
 }
