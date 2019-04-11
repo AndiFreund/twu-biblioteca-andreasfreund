@@ -162,4 +162,15 @@ public class SessionTests {
         //then
         assertThat(outContent.toString(), is(result));
     }
+
+    @Test
+    public void checkoutFailedTest() {
+        //given
+        setUp();
+        String result = "Sorry, that book is not available\n";
+        //when
+        session.executeLibraryApplication("checkout book0");
+        //then
+        assertThat(outContent.toString(), is(result));
+    }
 }
