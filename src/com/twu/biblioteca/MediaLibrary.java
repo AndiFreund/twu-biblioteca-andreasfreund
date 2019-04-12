@@ -16,7 +16,9 @@ public abstract class MediaLibrary {
         throw new MediaUnknownException();
     }
 
-    abstract int size();
+    int size() {
+        return items.size();
+    }
 
     String listAvailableItems() {
         StringBuilder builder = new StringBuilder();

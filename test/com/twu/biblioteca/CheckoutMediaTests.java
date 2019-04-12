@@ -1,0 +1,114 @@
+package com.twu.biblioteca;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+public class CheckoutMediaTests {
+
+
+    UserSession session;
+    //https://stackoverflow.com/a/1119559
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
+
+    @Before
+    public void setUp() {
+        session = new UserSession();
+        session.setUp();
+        System.setOut(new PrintStream(outContent));
+    }
+
+    @After
+    public void restoreStreams() {
+        System.setOut(originalOut);
+    }
+
+    private String generateBookResultString(int from, int to) {
+        StringBuilder builder = new StringBuilder();
+        for(int i = from; i <= to; i++) {
+            builder.append("book" + i + "\t\tauthor" + i + "\t\t200" + i + "\n");
+        }
+        return builder.toString();
+    }
+
+    private String generateMovieResultString(int from, int to) {
+        StringBuilder builder = new StringBuilder();
+        for(int i = from; i <= to; i++) {
+            builder.append("movie" + i + "\t\tdirector" + i + "\t\t200" + i + "\t\t" + i + "\n");
+        }
+        return builder.toString();
+    }
+
+    @Test
+    public void checkoutbookExecutionTest() {
+        //given
+        setUp();
+        String result = generateBookResultString(2, 3);
+        //when
+        session.executeLibraryApplication("checkoutbook book1");
+        //then
+        assertThat(session.getBookLibrary().listAvailableItems(), is(result));
+    }
+
+    @Test
+    public void checkoutbookSuccessfulTest() {
+        //given
+        setUp();
+        String result = "Thank you! Enjoy the book\n";
+        //when
+        session.executeLibraryApplication("checkoutbook book1");
+        //then
+        assertThat(outContent.toString(), is(result));
+    }
+
+    @Test
+    public void checkoutbookFailedTest() {
+        //given
+        setUp();
+        String result = "Sorry, that book is not available\n";
+        //when
+        session.executeLibraryApplication("checkoutbook book0");
+        //then
+        assertThat(outContent.toString(), is(result));
+    }
+
+    @Test
+    public void checkoutmovieExecutionTest() {
+        //given
+        setUp();
+        String result = generateMovieResultString(2, 3);
+        //when
+        session.executeLibraryApplication("checkoutmovie movie1");
+        //then
+        assertThat(session.getMovieLibrary().listAvailableItems(), is(result));
+    }
+
+    @Test
+    public void checkoutMovieSuccessfulTest() {
+        //given
+        setUp();
+        String result = "Thank you! Enjoy the movie\n";
+        //when
+        session.executeLibraryApplication("checkoutmovie movie1");
+        //then
+        assertThat(outContent.toString(), is(result));
+    }
+
+    @Test
+    public void checkoutmovieFailedTest() {
+        //given
+        setUp();
+        String result = "Sorry, that movie is not available\n";
+        //when
+        session.executeLibraryApplication("checkoutmovie movie");
+        //then
+        assertThat(outContent.toString(), is(result));
+    }
+}

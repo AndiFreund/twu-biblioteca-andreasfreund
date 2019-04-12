@@ -10,21 +10,23 @@ public class Option {
     private Map<String, LibraryExecutable> executables = new HashMap<>();
 
     Option() {
-        executables.put("quit", new ExitCommand());
-        executables.put("list", new ListBooksCommand());
-        executables.put("checkout", new CheckOutBookCommand());
-        executables.put("return", new ReturnBookCommand());
+        initializeExecutables();
     }
 
     Option(String command) {
+        initializeExecutables();
+
         this.command = command;
-
-        executables.put("quit", new ExitCommand());
-        executables.put("list", new ListBooksCommand());
-        executables.put("checkout", new CheckOutBookCommand());
-        executables.put("return", new ReturnBookCommand());
-
         this.application = getApplication(command);
+    }
+
+    private void initializeExecutables() {
+        executables.put("quit", new ExitCommand());
+        executables.put("listbooks", new ListBooksCommand());
+        executables.put("listmovies", new ListMoviesCommand());
+        executables.put("checkoutbook", new CheckOutBookCommand());
+        executables.put("checkoutmovie", new CheckOutMovieCommand());
+        executables.put("return", new ReturnBookCommand());
     }
 
     private LibraryExecutable getApplication(String command) {

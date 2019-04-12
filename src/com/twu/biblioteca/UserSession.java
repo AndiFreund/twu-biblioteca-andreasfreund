@@ -1,18 +1,19 @@
 package com.twu.biblioteca;
 
-import java.util.ArrayList;
 import java.util.List;
 public class UserSession {
 
     private String command;
     private String argument;
     private BookLibrary bookLibrary;
+    private MovieLibrary movieLibrary;
 
     public UserSession() {
     }
 
     public void setUp() {
         bookLibrary = new BookLibrary();
+        movieLibrary = new MovieLibrary();
     }
 
     public void executeLibraryApplication(String input) {
@@ -56,5 +57,9 @@ public class UserSession {
 
     public BookLibrary getBookLibrary() {
         return bookLibrary;
+    }
+
+    public MediaLibrary getMovieLibrary() {
+        return movieLibrary;
     }
 }
