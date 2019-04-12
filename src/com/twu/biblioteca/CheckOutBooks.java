@@ -6,12 +6,14 @@ public class CheckOutBooks implements LibraryApplication {
 
     @Override
     public void execute(Session session) {
-        int index = getIndexOfBook(session.getBooks(), session.getArgument());
-        if (index == -1) {
+        ArrayList<Book> books = session.getBooks();
+        int index = getIndexOfBook(books, session.getArgument());
+        if (index == -1 || !books.get(index).isInStock()) {
             System.out.println("Sorry, that book is not available");
             return;
         }
-        session.getBooks().remove(index);
+        books.get(index).setInStock(false);
+
 
         System.out.println("Thank you! Enjoy the book");
     }

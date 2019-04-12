@@ -41,12 +41,12 @@ public class SessionTests {
         //given
         Session testSession = new Session();
         assertThat(testSession.displayOptions(), is(""));
-        assertThat(testSession.displayBooks(), is(""));
+        assertThat(testSession.displayAvailableBooks(), is(""));
         //when
         testSession.setUp();
         //then
         assertThat(testSession.displayOptions(), is(not("")));
-        assertThat(testSession.displayBooks(), is(not("")));
+        assertThat(testSession.displayAvailableBooks(), is(not("")));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class SessionTests {
         //given
         String fakeList = "book1\nbook2\nbook3\n";
         //when
-        String message = session.displayBooks();
+        String message = session.displayAvailableBooks();
         //then
         assertThat(message, is(fakeList));
     }
@@ -77,7 +77,7 @@ public class SessionTests {
             fakeList += "book" + i + "\t\tauthor" + i + "\t\t200" + i + "\n";
         }
         //when
-        String message = session.displayBooks();
+        String message = session.displayAvailableBooks();
         //then
         assertThat(message, is(fakeList));
     }
@@ -149,7 +149,7 @@ public class SessionTests {
         //when
         session.executeLibraryApplication("checkout book1");
         //then
-        assertThat(session.displayBooks(), is(result));
+        assertThat(session.displayAvailableBooks(), is(result));
     }
 
     @Test

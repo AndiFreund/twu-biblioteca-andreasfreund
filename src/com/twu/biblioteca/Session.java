@@ -34,8 +34,18 @@ public class Session {
         return BibliotecaApp.showListAsString(new ArrayList<>(options.keySet()));
     }
 
-    public String displayBooks() {
+    /*public String displayBooks() {
         return BibliotecaApp.showListAsString(books);
+    }*/
+
+    public String displayAvailableBooks() {
+        String result = "";
+        for (Book book : books) {
+            if (book.isInStock()) {
+                result += book.toString() + "\n";
+            }
+        }
+        return result;
     }
 
     public void setUp() {
