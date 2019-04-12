@@ -1,8 +1,8 @@
 package com.twu.biblioteca;
 
-public class ListBooksApplication implements LibraryApplication {
+public class ListBooksCommand implements LibraryExecutable {
     @Override
-    public void execute(Session session) {
+    public void execute(UserSession session) {
         System.out.println(session.displayAvailableBooks());
     }
 }
