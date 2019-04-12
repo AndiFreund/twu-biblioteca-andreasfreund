@@ -23,6 +23,7 @@ public class Session {
         options.put("quit", new Option("quit", "quit"));
         options.put("list", new Option("list", "list of books"));
         options.put("checkout", new Option("checkout", "check out a book, \"checkout title\""));
+        options.put("return", new Option("return", "return a book, \"return title\""));
     }
 
     private void setUpBooks() {
@@ -60,7 +61,7 @@ public class Session {
     }
 
     private void displayRetry() {
-        System.out.println("Please select a valid options!");
+        System.out.println("Please select a valid option!");
         System.out.println(displayOptions());
     }
 

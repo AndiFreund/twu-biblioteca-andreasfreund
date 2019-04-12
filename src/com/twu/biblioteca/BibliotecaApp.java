@@ -14,7 +14,7 @@ public class BibliotecaApp {
 
         Scanner scanner = new Scanner(System.in);
         while(true) {
-            String input = scanner.next();
+            String input = scanner.nextLine();
             session.executeLibraryApplication(input);
         }
     }

@@ -36,6 +36,14 @@ public class SessionTests {
         System.setOut(originalOut);
     }
 
+    private String generateBookResultString(int from, int to) {
+        String result = "";
+        for(int i = from; i <= to; i++) {
+            result += "book" + i + "\t\tauthor" + i + "\t\t200" + i + "\n";
+        }
+        return result;
+    }
+
     @Test
     public void testSetUpTest() {
         //given
@@ -72,10 +80,7 @@ public class SessionTests {
     @Test
     public void listOfBooksWithAdditionalDataTest() {
         //given
-        String fakeList = new String();
-        for(int i = 1; i <= 3; i++) {
-            fakeList += "book" + i + "\t\tauthor" + i + "\t\t200" + i + "\n";
-        }
+        String fakeList = generateBookResultString(1, 3);
         //when
         String message = session.displayAvailableBooks();
         //then
@@ -85,7 +90,7 @@ public class SessionTests {
     @Test
     public void listOfOptionsTest() {
         //given
-        String fakeListOfOptions = "quit\nlist\ncheckout\n";
+        String fakeListOfOptions = "quit\nlist\ncheckout\nreturn\n";
         //when
         String message = session.displayOptions();
         //then
@@ -95,7 +100,7 @@ public class SessionTests {
     @Test
     public void invalidOptionInputTest() {
         //given
-        String fakeMessage = "Please select a valid options!\nquit\nlist\ncheckout\n\n";
+        String fakeMessage = "Please select a valid option!\nquit\nlist\ncheckout\nreturn\n\n";
         //when
         session.executeLibraryApplication("-1");
         //then
@@ -105,7 +110,7 @@ public class SessionTests {
     @Test
     public void invalidFormatInputTest() {
         //given
-        String fakeMessage = "Please select a valid options!\nquit\nlist\ncheckout\n\n";
+        String fakeMessage = "Please select a valid option!\nquit\nlist\ncheckout\nreturn\n\n";
         //when
         session.executeLibraryApplication("abc");
         //then
@@ -120,10 +125,7 @@ public class SessionTests {
     @Test
     public void listExecutionTest() {
         //given
-        String fakeList = new String();
-        for(int i = 1; i <= 3; i++) {
-            fakeList += "book" + i + "\t\tauthor" + i + "\t\t200" + i + "\n";
-        }
+        String fakeList = generateBookResultString(1, 3);
         fakeList += "\n";
         //when
         session.executeLibraryApplication("list");
@@ -142,10 +144,7 @@ public class SessionTests {
     public void checkoutExecutionTest() {
         //given
         setUp();
-        String result = new String();
-        for(int i = 2; i <= 3; i++) {
-            result += "book" + i + "\t\tauthor" + i + "\t\t200" + i + "\n";
-        }
+        String result = generateBookResultString(2, 3);
         //when
         session.executeLibraryApplication("checkout book1");
         //then
@@ -170,6 +169,42 @@ public class SessionTests {
         String result = "Sorry, that book is not available\n";
         //when
         session.executeLibraryApplication("checkout book0");
+        //then
+        assertThat(outContent.toString(), is(result));
+    }
+
+    @Test
+    public void returnBookSuccessTest() {
+        //given
+        setUp();
+        String fakeResult = generateBookResultString(1, 3);
+        session.getBooks().get(0).setInStock(false);
+        //when
+        session.executeLibraryApplication("return book1");
+        //then
+        String result = session.displayAvailableBooks();
+        assertThat(result, is(fakeResult));
+    }
+
+    @Test
+    public void returnBookSuccessMessageTest() {
+        //given
+        setUp();
+        String result = "Thank you for returning the book\n";
+        session.getBooks().get(0).setInStock(false);
+        //when
+        session.executeLibraryApplication("return book1");
+        //then
+        assertThat(outContent.toString(), is(result));
+    }
+
+    @Test
+    public void returnInvalidBookTest() {
+        //given
+        setUp();
+        String result = "That is not a valid book to return\n";
+        //when
+        session.executeLibraryApplication("return book4");
         //then
         assertThat(outContent.toString(), is(result));
     }

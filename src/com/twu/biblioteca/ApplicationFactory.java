@@ -9,7 +9,9 @@ public class ApplicationFactory {
             case "list":
                 return new ListBooksApplication();
             case "checkout":
-                return new CheckOutBooks();
+                return new CheckOutBook();
+            case "return":
+                return new ReturnBook();
         }
         return null;
     }
