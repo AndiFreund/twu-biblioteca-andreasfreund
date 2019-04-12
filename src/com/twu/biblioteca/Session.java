@@ -14,6 +14,11 @@ public class Session {
     public Session() {
     }
 
+    public void setUp() {
+        setUpOptions();
+        setUpBooks();
+    }
+
     private void setUpOptions() {
         options.put("quit", new Option("quit", "quit"));
         options.put("list", new Option("list", "list of books"));
@@ -26,18 +31,6 @@ public class Session {
         books.add(new Book("book3", "author3", "2003"));
     }
 
-    public String displayWelcomeMessage() {
-        return "Welcome to Biblioteca! Your one-stop-shop for great book titles in Bangalore!";
-    }
-    
-    public String displayOptions() {
-        return BibliotecaApp.showListAsString(new ArrayList<>(options.keySet()));
-    }
-
-    /*public String displayBooks() {
-        return BibliotecaApp.showListAsString(books);
-    }*/
-
     public String displayAvailableBooks() {
         String result = "";
         for (Book book : books) {
@@ -48,13 +41,9 @@ public class Session {
         return result;
     }
 
-    public void setUp() {
-        setUpOptions();
-        setUpBooks();
-    }
-
     public void executeLibraryApplication(String input) {
-        splitInput(input);
+        command = BibliotecaApp.extractCommand(input);
+        argument = BibliotecaApp.extractArgument(input);
         try {
             options.get(command).execute(this);
         } catch (NullPointerException e) {
@@ -62,18 +51,12 @@ public class Session {
         }
     }
 
-    private void splitInput(String input) {
-        command = extractCommand(input);
-        argument = extractArgument(input);
+    public String displayWelcomeMessage() {
+        return "Welcome to Biblioteca! Your one-stop-shop for great book titles in Bangalore!";
     }
 
-    private String extractCommand(String input) {
-        return input.split(" ")[0];
-    }
-
-    private String extractArgument(String input) {
-        String[] temp = input.split(" ", 2);
-        return temp.length > 1 ? temp[1] : "";
+    public String displayOptions() {
+        return BibliotecaApp.showListAsString(new ArrayList<>(options.keySet()));
     }
 
     private void displayRetry() {
