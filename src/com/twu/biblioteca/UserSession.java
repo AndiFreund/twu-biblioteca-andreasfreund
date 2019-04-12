@@ -4,33 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 public class UserSession {
 
-    private List<Book> books = new ArrayList<>();
     private String command;
     private String argument;
+    private BookLibrary bookLibrary;
 
     public UserSession() {
     }
 
     public void setUp() {
-        setUpBooks();
-    }
-
-    private void setUpBooks() {
-        books.add(new Book("book1", "author1", "2001"));
-        books.add(new Book("book2", "author2", "2002"));
-        books.add(new Book("book3", "author3", "2003"));
-    }
-
-    public String displayAvailableBooks() {
-        StringBuilder builder = new StringBuilder();
-        for (Book book : books) {
-            if (book.isInStock()) {
-                builder.append(book.toString());
-                builder.append("\n");
-            }
-        }
-
-        return builder.toString();
+        bookLibrary = new BookLibrary();
     }
 
     public void executeLibraryApplication(String input) {
@@ -72,7 +54,7 @@ public class UserSession {
         return argument;
     }
 
-    public List<Book> getBooks() {
-        return books;
+    public BookLibrary getBookLibrary() {
+        return bookLibrary;
     }
 }

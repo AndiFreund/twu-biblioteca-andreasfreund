@@ -46,7 +46,7 @@ public class CheckoutBooksTests {
         //when
         session.executeLibraryApplication("checkout book1");
         //then
-        assertThat(session.displayAvailableBooks(), is(result));
+        assertThat(session.getBookLibrary().listAvailableItems(), is(result));
     }
 
     @Test

@@ -31,7 +31,7 @@ public class ListBooksTests {
         //given
         String fakeList = "book1\nbook2\nbook3\n";
         //when
-        String message = session.displayAvailableBooks();
+        String message = session.getBookLibrary().listAvailableItems();
         //then
         assertThat(message, is(fakeList));
     }
@@ -41,7 +41,7 @@ public class ListBooksTests {
         //given
         String fakeList = generateBookResultString(1, 3);
         //when
-        String message = session.displayAvailableBooks();
+        String message = session.getBookLibrary().listAvailableItems();
         //then
         assertThat(message, is(fakeList));
     }
