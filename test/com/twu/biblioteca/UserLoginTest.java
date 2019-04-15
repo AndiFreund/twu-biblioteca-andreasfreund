@@ -61,4 +61,29 @@ public class UserLoginTest {
         assertThat(result, is(false));
     }
 
+    @Test
+    public void listContactDetailsTest() {
+        //given
+        setUp();
+        User user = new User("123-1234", "password123", "John Doe", "john@tw.com", "012345");
+        session.setUser(user);
+        String fakeResult = "John Doe, john@tw.com, 012345\n";
+        //when
+        session.executeLibraryApplication("mycontact");
+        //then
+        assertThat(outContent.toString(), is(fakeResult));
+    }
+
+    @Test 
+    public void listContactDetailsNotLoggedInTest() {
+        //given
+        setUp();
+        session.setUser(null);
+        String fakeResult = "Please log in with command \"login\"\n";
+        //when
+        session.executeLibraryApplication("mycontact");
+        //then
+        assertThat(outContent.toString(), is(fakeResult));
+
+    }
 }
