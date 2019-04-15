@@ -22,6 +22,7 @@ public class Option {
 
     private void initializeExecutables() {
         executables.put("quit", new ExitCommand());
+        executables.put("login", new LoginCommand());
         executables.put("listbooks", new ListBooksCommand());
         executables.put("listmovies", new ListMoviesCommand());
         executables.put("checkoutbook", new CheckOutBookCommand());

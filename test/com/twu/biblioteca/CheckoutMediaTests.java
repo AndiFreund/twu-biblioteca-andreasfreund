@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 public class CheckoutMediaTests {
@@ -50,6 +50,7 @@ public class CheckoutMediaTests {
     public void checkoutbookExecutionTest() {
         //given
         setUp();
+        session.setUser(new User("123-1234", "password123", "John Doe", "john@tw.com", "012345"));
         String result = generateBookResultString(2, 3);
         //when
         session.executeLibraryApplication("checkoutbook book1");
@@ -61,6 +62,7 @@ public class CheckoutMediaTests {
     public void checkoutbookSuccessfulTest() {
         //given
         setUp();
+        session.setUser(new User("123-1234", "password123", "John Doe", "john@tw.com", "012345"));
         String result = "Thank you! Enjoy the book\n";
         //when
         session.executeLibraryApplication("checkoutbook book1");
@@ -72,6 +74,7 @@ public class CheckoutMediaTests {
     public void checkoutbookFailedTest() {
         //given
         setUp();
+        session.setUser(new User("123-1234", "password123", "John Doe", "john@tw.com", "012345"));
         String result = "Sorry, that book is not available\n";
         //when
         session.executeLibraryApplication("checkoutbook book0");
@@ -83,6 +86,7 @@ public class CheckoutMediaTests {
     public void checkoutmovieExecutionTest() {
         //given
         setUp();
+        session.setUser(new User("123-1234", "password123", "John Doe", "john@tw.com", "012345"));
         String result = generateMovieResultString(2, 3);
         //when
         session.executeLibraryApplication("checkoutmovie movie1");
@@ -94,6 +98,7 @@ public class CheckoutMediaTests {
     public void checkoutMovieSuccessfulTest() {
         //given
         setUp();
+        session.setUser(new User("123-1234", "password123", "John Doe", "john@tw.com", "012345"));
         String result = "Thank you! Enjoy the movie\n";
         //when
         session.executeLibraryApplication("checkoutmovie movie1");
@@ -105,10 +110,52 @@ public class CheckoutMediaTests {
     public void checkoutmovieFailedTest() {
         //given
         setUp();
+        session.setUser(new User("123-1234", "password123", "John Doe", "john@tw.com", "012345"));
         String result = "Sorry, that movie is not available\n";
         //when
         session.executeLibraryApplication("checkoutmovie movie");
         //then
         assertThat(outContent.toString(), is(result));
+    }
+
+    @Test
+    public void checkoutNotLoggedinBookTest() {
+        //given
+        setUp();
+        session.setUser(null);
+        //when
+        session.executeLibraryApplication("checkoutbook book1");
+        //then
+        assertThat(outContent.toString(), is(not("Thank you! Enjoy the book\n")));
+    }
+
+    @Test
+    public void checkoutNotLoggedinMovieTest() {
+        //given
+        setUp();
+        session.setUser(null);
+        //when
+        session.executeLibraryApplication("checkoutmovie movie1");
+        //then
+        assertThat(outContent.toString(), is(not("Thank you! Enjoy the movie\n")));
+    }
+
+    @Test
+    public void checkoutUserAccountableTest() {
+        //given
+        setUp();
+        session.setUser(new User("123-1234", "password123", "John Doe", "john@tw.com", "012345"));
+        Book item = null;
+        try {
+            item = (Book) session.getBookLibrary().getByTitle("book1");
+        } catch (MediaUnknownException e) {
+            e.printStackTrace();
+        }
+        assertThat(item, is(notNullValue()));
+        assertThat(item.customer, is(nullValue()));
+        //when
+        session.executeLibraryApplication("checkoutbook book1");
+        //then
+        assertThat(item.customer, is(not(nullValue())));
     }
 }

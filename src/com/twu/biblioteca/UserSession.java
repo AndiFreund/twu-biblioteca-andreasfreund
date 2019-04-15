@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import java.security.AuthProvider;
 import java.util.List;
 public class UserSession {
 
@@ -7,6 +8,7 @@ public class UserSession {
     private String argument;
     private BookLibrary bookLibrary;
     private MovieLibrary movieLibrary;
+    private User user;
 
     public UserSession() {
     }
@@ -51,6 +53,10 @@ public class UserSession {
         return temp.length > 1 ? temp[1] : "";
     }
 
+    public String getCommand() {
+        return command;
+    }
+
     public String getArgument() {
         return argument;
     }
@@ -61,5 +67,17 @@ public class UserSession {
 
     public MediaLibrary getMovieLibrary() {
         return movieLibrary;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public boolean isLoggedIn() {
+        return user != null;
     }
 }

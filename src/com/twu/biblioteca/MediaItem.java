@@ -5,6 +5,7 @@ public abstract class MediaItem {
     String title;
     String year;
     boolean inStock;
+    User customer;
 
     String getTitle() {
         return title;
@@ -16,6 +17,10 @@ public abstract class MediaItem {
 
     void setInStock(boolean inStock) {
         this.inStock = inStock;
+    }
+
+    public void setCustomer(User customer) {
+        this.customer = customer;
     }
 
     public abstract String toString();

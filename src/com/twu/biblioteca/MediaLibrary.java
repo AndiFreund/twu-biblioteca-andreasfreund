@@ -32,10 +32,10 @@ public abstract class MediaLibrary {
         return builder.toString();
     }
 
-    boolean checkOutItemByTitle(String title) {
+    boolean checkOutItemByTitle(User user, String title) {
         for (MediaItem item : items) {
             if (item.title.equals(title)) {
-                item.setInStock(false);
+                itemTransition(user, item, false);
                 return true;
             }
         }
@@ -46,10 +46,15 @@ public abstract class MediaLibrary {
         for (MediaItem item : items) {
             //check if already in stock??
             if (item.title.equals(title)) {
-                item.setInStock(true);
+                itemTransition(null, item, true);
                 return true;
             }
         }
         return false;
+    }
+
+    void itemTransition(User customer, MediaItem item, boolean returnToLibrary) {
+        item.setInStock(returnToLibrary);
+        item.setCustomer(customer);
     }
 }
