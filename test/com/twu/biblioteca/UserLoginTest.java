@@ -74,7 +74,7 @@ public class UserLoginTest {
         assertThat(outContent.toString(), is(fakeResult));
     }
 
-    @Test 
+    @Test
     public void listContactDetailsNotLoggedInTest() {
         //given
         setUp();

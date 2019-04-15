@@ -28,7 +28,8 @@ public class Option {
         executables.put("listmovies", new ListMoviesCommand());
         executables.put("checkoutbook", new CheckOutBookCommand());
         executables.put("checkoutmovie", new CheckOutMovieCommand());
-        executables.put("return", new ReturnBookCommand());
+        executables.put("returnbook", new ReturnBookCommand());
+        executables.put("returnmovie", new ReturnMovieCommand());
     }
 
     private LibraryExecutable getApplication(String command) {
