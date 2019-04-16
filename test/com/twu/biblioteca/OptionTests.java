@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
 
 public class OptionTests {
 
-    UserSession session;
+    private UserSession session;
     //https://stackoverflow.com/a/1119559
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;

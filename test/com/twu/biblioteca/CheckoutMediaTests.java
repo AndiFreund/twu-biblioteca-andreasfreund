@@ -33,7 +33,7 @@ public class CheckoutMediaTests {
     private String generateBookResultString(int from, int to) {
         StringBuilder builder = new StringBuilder();
         for(int i = from; i <= to; i++) {
-            builder.append("book" + i + "\t\tauthor" + i + "\t\t200" + i + "\n");
+            builder.append("book").append(i).append("\t\tauthor").append(i).append("\t\t200").append(i).append("\n");
         }
         return builder.toString();
     }
@@ -41,7 +41,7 @@ public class CheckoutMediaTests {
     private String generateMovieResultString(int from, int to) {
         StringBuilder builder = new StringBuilder();
         for(int i = from; i <= to; i++) {
-            builder.append("movie" + i + "\t\tdirector" + i + "\t\t200" + i + "\t\t" + i + "\n");
+            builder.append("movie").append(i).append("\t\tdirector").append(i).append("\t\t200").append(i).append("\t\t").append(i).append("\n");
         }
         return builder.toString();
     }

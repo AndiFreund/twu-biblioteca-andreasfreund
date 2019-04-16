@@ -1,3 +1,17 @@
+##TWU Biblioteca Assignment
+
+After running the application the user can put in various commands.
+- 'listbooks' and 'listmovies' shows the list of available books and movies.
+- 'login [username] [password]' logs the user in (currently only one dummy user available)
+- 'mycontact' displays a logged in user's name, e-mail address, and phone number.
+- 'checkoutbook' and 'checkoutmovie' let's a _logged in_ user checkout a book or movie
+- 'return book' and 'returnmovie' returns a book or movie (which can only be returned if it's a book/movie from the library)
+- 'quit' exists the application.
+
+###Technical Decisions
+
+My solution of the Biblioteca assignment uses a command pattern in it's core. In order to add a new command, one has to add a new implementation of `LibraryExecutable` to the Map `exectuables` in the class `Option`. This new command is then present in the application.
+
 Instructions to push your code to code.google.com
 =================================================
 1. Sign into GitHub and create a new repository

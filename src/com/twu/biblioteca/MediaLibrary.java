@@ -53,7 +53,7 @@ public abstract class MediaLibrary {
         return false;
     }
 
-    void itemTransition(User customer, MediaItem item, boolean returnToLibrary) {
+    private void itemTransition(User customer, MediaItem item, boolean returnToLibrary) {
         item.setInStock(returnToLibrary);
         item.setCustomer(customer);
     }

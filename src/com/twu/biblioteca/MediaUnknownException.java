@@ -1,4 +1,4 @@
 package com.twu.biblioteca;
 
-public class MediaUnknownException extends Exception {
+class MediaUnknownException extends Exception {
 }

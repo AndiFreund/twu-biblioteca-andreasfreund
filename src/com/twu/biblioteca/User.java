@@ -2,11 +2,11 @@ package com.twu.biblioteca;
 
 public class User {
 
-    String id;
-    String password;
-    String name;
-    String email;
-    String phonenumber;
+    private String id;
+    private String password;
+    private String name;
+    private String email;
+    private String phonenumber;
 
     public User(String id, String password, String name, String email, String phonenumber) {
         this.id = id;

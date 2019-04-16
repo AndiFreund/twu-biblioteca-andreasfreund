@@ -11,7 +11,7 @@ public class GetBooks {
     private String generateBookResultString(int from, int to) {
         StringBuilder builder = new StringBuilder();
         for(int i = from; i <= to; i++) {
-            builder.append("book" + i + "\t\tauthor" + i + "\t\t200" + i + "\n");
+            builder.append("book").append(i).append("\t\tauthor").append(i).append("\t\t200").append(i).append("\n");
         }
         return builder.toString();
     }

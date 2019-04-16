@@ -19,7 +19,7 @@ public abstract class MediaItem {
         this.inStock = inStock;
     }
 
-    public void setCustomer(User customer) {
+    void setCustomer(User customer) {
         this.customer = customer;
     }
 

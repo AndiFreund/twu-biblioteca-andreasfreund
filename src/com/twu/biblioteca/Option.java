@@ -5,7 +5,6 @@ import java.util.*;
 public class Option {
 
     private String command;
-    private String description;
     private LibraryExecutable application;
     private Map<String, LibraryExecutable> executables = new HashMap<>();
 

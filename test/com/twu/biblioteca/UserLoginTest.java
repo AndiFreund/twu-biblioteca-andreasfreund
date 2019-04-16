@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
 public class UserLoginTest {
 
 
-    UserSession session;
+    private UserSession session;
 
     //https://stackoverflow.com/a/1119559
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();

@@ -1,10 +1,8 @@
 package com.twu.biblioteca;
 
-import java.security.AuthProvider;
 import java.util.List;
 public class UserSession {
 
-    private String command;
     private String argument;
     private BookLibrary bookLibrary;
     private MovieLibrary movieLibrary;
@@ -19,7 +17,7 @@ public class UserSession {
     }
 
     public void executeLibraryApplication(String input) {
-        command = extractCommand(input);
+        String command = extractCommand(input);
         argument = extractArgument(input);
         Option option = new Option(command);
         option.execute(this);
@@ -44,28 +42,24 @@ public class UserSession {
         return builder.toString();
     }
 
-    String extractCommand(String input) {
+    private String extractCommand(String input) {
         return input.split(" ")[0];
     }
 
-    String extractArgument(String input) {
+    private String extractArgument(String input) {
         String[] temp = input.split(" ", 2);
         return temp.length > 1 ? temp[1] : "";
     }
 
-    public String getCommand() {
-        return command;
-    }
-
-    public String getArgument() {
+    String getArgument() {
         return argument;
     }
 
-    public BookLibrary getBookLibrary() {
+    BookLibrary getBookLibrary() {
         return bookLibrary;
     }
 
-    public MediaLibrary getMovieLibrary() {
+    MediaLibrary getMovieLibrary() {
         return movieLibrary;
     }
 
@@ -77,7 +71,7 @@ public class UserSession {
         this.user = user;
     }
 
-    public boolean isLoggedIn() {
+    boolean isLoggedIn() {
         return user != null;
     }
 }
